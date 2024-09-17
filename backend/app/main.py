@@ -8,15 +8,22 @@ app = FastAPI()
 
 @app.on_event("startup")
 def on_startup():
-    init_db()  # Initialize database connection
+    init_db()
 
 @app.post("/allocate_resources/", response_model=ResourceAllocationResponse)
 async def allocate_resources(scenario: DisasterScenario):
-    # Call the genetic algorithm (GA)
+    # Call the genetic algorithm (GA) to allocate resources
     best_allocation = run_ga(scenario)
-    # Simulate disaster response
-    response_time = run_simulation(scenario)
-    return ResourceAllocationResponse(allocation=best_allocation, total_resources=sum(best_allocation.values()), response_time=response_time)
+    
+    # Simulate earthquake disaster response
+    response_time, remaining_resources = run_simulation(scenario)
+    
+    return ResourceAllocationResponse(
+        allocation=best_allocation,
+        total_resources=sum(best_allocation.values()),
+        response_time=response_time,
+        remaining_resources=remaining_resources
+    )
 
 @app.get("/")
 async def root():
