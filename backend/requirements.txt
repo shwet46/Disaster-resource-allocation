@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+deap
+simpy
+psycopg2-binary
+pydantic
