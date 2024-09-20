@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:80"
+    environment:
+      - POSTGRES_DB=disaster_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=disaster_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"

@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Python cache
+__pycache__/
+
+# Docker artifacts
+*.log
+.dockerignore
+
+# Database data
+db_data/
